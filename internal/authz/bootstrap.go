@@ -211,6 +211,8 @@ func BuiltinRoleSeeds() []RoleSeed {
 				// Telegram Bot 群发
 				{Object: "/admin/telegram-bot/broadcasts", Action: "*"},
 				{Object: "/admin/telegram-bot/users", Action: "GET"},
+				// 合规声明（GET 已由 readonly_auditor 的 /admin/* GET 通配覆盖）
+				{Object: "/admin/compliance/acknowledge", Action: "POST"},
 			},
 			Immutable: true,
 		},
