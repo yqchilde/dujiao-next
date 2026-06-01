@@ -14,9 +14,7 @@ import (
 
 // GetAdminPosts 获取文章列表 (Admin)
 func (h *Handler) GetAdminPosts(c *gin.Context) {
-	page, _ := strconv.Atoi(c.DefaultQuery("page", "1"))
-	pageSize, _ := strconv.Atoi(c.DefaultQuery("page_size", "20"))
-	page, pageSize = shared.NormalizePagination(page, pageSize)
+	page, pageSize := shared.ParsePagination(c)
 	postType := c.Query("type")
 	search := c.Query("search")
 

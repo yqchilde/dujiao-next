@@ -30,9 +30,7 @@ type BannerUpsertRequest struct {
 
 // GetAdminBanners 获取后台 Banner 列表
 func (h *Handler) GetAdminBanners(c *gin.Context) {
-	page, _ := strconv.Atoi(c.DefaultQuery("page", "1"))
-	pageSize, _ := strconv.Atoi(c.DefaultQuery("page_size", "20"))
-	page, pageSize = shared.NormalizePagination(page, pageSize)
+	page, pageSize := shared.ParsePagination(c)
 
 	position := c.Query("position")
 	search := c.Query("search")

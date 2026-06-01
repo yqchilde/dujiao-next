@@ -20,9 +20,7 @@ func (h *Handler) GetProcurementOrders(c *gin.Context) {
 		shared.RespondErrorWithMsg(c, response.CodeInternal, "service not available", nil)
 		return
 	}
-	page, _ := strconv.Atoi(c.DefaultQuery("page", "1"))
-	pageSize, _ := strconv.Atoi(c.DefaultQuery("page_size", "20"))
-	page, pageSize = shared.NormalizePagination(page, pageSize)
+	page, pageSize := shared.ParsePagination(c)
 
 	filter := repository.ProcurementOrderListFilter{
 		Pagination: repository.Pagination{Page: page, PageSize: pageSize},

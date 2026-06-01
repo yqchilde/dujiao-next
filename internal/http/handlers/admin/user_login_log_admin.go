@@ -1,7 +1,6 @@
 package admin
 
 import (
-	"strconv"
 	"strings"
 
 	"github.com/dujiao-next/internal/http/handlers/shared"
@@ -13,9 +12,7 @@ import (
 
 // GetUserLoginLogs 获取用户登录日志列表
 func (h *Handler) GetUserLoginLogs(c *gin.Context) {
-	page, _ := strconv.Atoi(c.DefaultQuery("page", "1"))
-	pageSize, _ := strconv.Atoi(c.DefaultQuery("page_size", "20"))
-	page, pageSize = shared.NormalizePagination(page, pageSize)
+	page, pageSize := shared.ParsePagination(c)
 
 	userIDRaw := c.Query("user_id")
 	email := strings.TrimSpace(c.Query("email"))

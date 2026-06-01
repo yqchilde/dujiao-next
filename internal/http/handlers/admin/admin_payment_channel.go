@@ -253,9 +253,7 @@ func (h *Handler) GetPaymentChannel(c *gin.Context) {
 
 // GetPaymentChannels 获取支付渠道列表
 func (h *Handler) GetPaymentChannels(c *gin.Context) {
-	page, _ := strconv.Atoi(c.DefaultQuery("page", "1"))
-	pageSize, _ := strconv.Atoi(c.DefaultQuery("page_size", "20"))
-	page, pageSize = shared.NormalizePagination(page, pageSize)
+	page, pageSize := shared.ParsePagination(c)
 
 	providerType := c.Query("provider_type")
 	channelType := c.Query("channel_type")

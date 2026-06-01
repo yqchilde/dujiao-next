@@ -31,9 +31,7 @@ const adminPaymentExportBatchSize = 500
 
 // GetAdminPayments 获取支付记录列表
 func (h *Handler) GetAdminPayments(c *gin.Context) {
-	page, _ := strconv.Atoi(c.DefaultQuery("page", "1"))
-	pageSize, _ := strconv.Atoi(c.DefaultQuery("page_size", "20"))
-	page, pageSize = shared.NormalizePagination(page, pageSize)
+	page, pageSize := shared.ParsePagination(c)
 
 	filter, err := buildAdminPaymentFilter(c, page, pageSize)
 	if err != nil {

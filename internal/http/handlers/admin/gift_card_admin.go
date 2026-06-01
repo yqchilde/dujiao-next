@@ -4,7 +4,6 @@ import (
 	"errors"
 	"fmt"
 	"net/http"
-	"strconv"
 	"strings"
 	"time"
 
@@ -101,9 +100,7 @@ func (h *Handler) GenerateGiftCards(c *gin.Context) {
 
 // GetGiftCards 获取礼品卡列表
 func (h *Handler) GetGiftCards(c *gin.Context) {
-	page, _ := strconv.Atoi(c.DefaultQuery("page", "1"))
-	pageSize, _ := strconv.Atoi(c.DefaultQuery("page_size", "20"))
-	page, pageSize = shared.NormalizePagination(page, pageSize)
+	page, pageSize := shared.ParsePagination(c)
 
 	status := strings.TrimSpace(strings.ToLower(c.Query("status")))
 	code := strings.TrimSpace(c.Query("code"))

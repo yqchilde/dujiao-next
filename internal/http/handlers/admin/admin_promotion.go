@@ -142,9 +142,7 @@ func (h *Handler) DeletePromotion(c *gin.Context) {
 
 // GetAdminPromotions 获取活动价列表
 func (h *Handler) GetAdminPromotions(c *gin.Context) {
-	page, _ := strconv.Atoi(c.DefaultQuery("page", "1"))
-	pageSize, _ := strconv.Atoi(c.DefaultQuery("page_size", "20"))
-	page, pageSize = shared.NormalizePagination(page, pageSize)
+	page, pageSize := shared.ParsePagination(c)
 
 	id, err := shared.ParseQueryUint(c.Query("id"), true)
 	if err != nil {

@@ -161,9 +161,7 @@ func (h *Handler) DeleteCoupon(c *gin.Context) {
 
 // GetAdminCoupons 获取优惠券列表
 func (h *Handler) GetAdminCoupons(c *gin.Context) {
-	page, _ := strconv.Atoi(c.DefaultQuery("page", "1"))
-	pageSize, _ := strconv.Atoi(c.DefaultQuery("page_size", "20"))
-	page, pageSize = shared.NormalizePagination(page, pageSize)
+	page, pageSize := shared.ParsePagination(c)
 
 	code := c.Query("code")
 	id, err := shared.ParseQueryUint(c.Query("id"), true)

@@ -25,9 +25,7 @@ type createTelegramBroadcastRequest struct {
 
 // ListTelegramBroadcasts 获取 Telegram 群发列表。
 func (h *Handler) ListTelegramBroadcasts(c *gin.Context) {
-	page, _ := strconv.Atoi(c.DefaultQuery("page", "1"))
-	pageSize, _ := strconv.Atoi(c.DefaultQuery("page_size", "20"))
-	page, pageSize = shared.NormalizePagination(page, pageSize)
+	page, pageSize := shared.ParsePagination(c)
 
 	items, total, err := h.TelegramBroadcastService.ListBroadcasts(service.TelegramBroadcastListInput{
 		Page:     page,
@@ -91,9 +89,7 @@ func (h *Handler) GetTelegramBroadcast(c *gin.Context) {
 
 // ListTelegramBroadcastUsers 获取 Telegram 广播可选用户。
 func (h *Handler) ListTelegramBroadcastUsers(c *gin.Context) {
-	page, _ := strconv.Atoi(c.DefaultQuery("page", "1"))
-	pageSize, _ := strconv.Atoi(c.DefaultQuery("page_size", "20"))
-	page, pageSize = shared.NormalizePagination(page, pageSize)
+	page, pageSize := shared.ParsePagination(c)
 
 	createdFrom, err := shared.ParseTimeNullable(strings.TrimSpace(c.Query("created_from")))
 	if err != nil {

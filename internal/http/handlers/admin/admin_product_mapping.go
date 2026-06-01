@@ -14,9 +14,7 @@ import (
 
 // GetProductMappings 获取商品映射列表
 func (h *Handler) GetProductMappings(c *gin.Context) {
-	page, _ := strconv.Atoi(c.DefaultQuery("page", "1"))
-	pageSize, _ := strconv.Atoi(c.DefaultQuery("page_size", "20"))
-	page, pageSize = shared.NormalizePagination(page, pageSize)
+	page, pageSize := shared.ParsePagination(c)
 
 	connectionID, _ := shared.ParseQueryUint(c.Query("connection_id"), false)
 

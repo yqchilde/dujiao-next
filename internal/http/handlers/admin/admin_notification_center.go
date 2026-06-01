@@ -55,9 +55,7 @@ type NotificationCenterTestSendRequest struct {
 
 // ListNotificationLogs 获取通知发送日志列表
 func (h *Handler) ListNotificationLogs(c *gin.Context) {
-	page, _ := strconv.Atoi(c.DefaultQuery("page", "1"))
-	pageSize, _ := strconv.Atoi(c.DefaultQuery("page_size", "20"))
-	page, pageSize = shared.NormalizePagination(page, pageSize)
+	page, pageSize := shared.ParsePagination(c)
 
 	channel := strings.ToLower(strings.TrimSpace(c.Query("channel")))
 	status := strings.ToLower(strings.TrimSpace(c.Query("status")))

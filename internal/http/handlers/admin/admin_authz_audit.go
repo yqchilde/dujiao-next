@@ -1,7 +1,6 @@
 package admin
 
 import (
-	"strconv"
 	"strings"
 
 	"github.com/dujiao-next/internal/http/handlers/shared"
@@ -13,9 +12,7 @@ import (
 
 // ListAuthzAuditLogs 获取权限审计日志列表
 func (h *Handler) ListAuthzAuditLogs(c *gin.Context) {
-	page, _ := strconv.Atoi(c.DefaultQuery("page", "1"))
-	pageSize, _ := strconv.Atoi(c.DefaultQuery("page_size", "20"))
-	page, pageSize = shared.NormalizePagination(page, pageSize)
+	page, pageSize := shared.ParsePagination(c)
 
 	operatorAdminIDRaw := c.Query("operator_admin_id")
 	targetAdminIDRaw := c.Query("target_admin_id")

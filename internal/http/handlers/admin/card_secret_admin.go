@@ -235,9 +235,7 @@ func (h *Handler) GetCardSecrets(c *gin.Context) {
 		}
 		batchID = parsed
 	}
-	page, _ := strconv.Atoi(c.DefaultQuery("page", "1"))
-	pageSize, _ := strconv.Atoi(c.DefaultQuery("page_size", "20"))
-	page, pageSize = shared.NormalizePagination(page, pageSize)
+	page, pageSize := shared.ParsePagination(c)
 	status := strings.TrimSpace(c.Query("status"))
 	secret := strings.TrimSpace(c.Query("secret"))
 	batchNo := strings.TrimSpace(c.Query("batch_no"))
@@ -435,9 +433,7 @@ func (h *Handler) GetCardSecretBatches(c *gin.Context) {
 		shared.RespondError(c, response.CodeBadRequest, "error.card_secret_invalid", nil)
 		return
 	}
-	page, _ := strconv.Atoi(c.DefaultQuery("page", "1"))
-	pageSize, _ := strconv.Atoi(c.DefaultQuery("page_size", "20"))
-	page, pageSize = shared.NormalizePagination(page, pageSize)
+	page, pageSize := shared.ParsePagination(c)
 	skuID, err := shared.ParseQueryUint(c.DefaultQuery("sku_id", "0"), false)
 	if err != nil {
 		shared.RespondError(c, response.CodeBadRequest, "error.card_secret_invalid", nil)
