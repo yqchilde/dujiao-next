@@ -183,6 +183,13 @@ func (h *Handler) GetConfig(c *gin.Context) {
 	emailVerificationEnabled, _ := h.SettingService.GetEmailVerificationEnabled(true)
 	data["registration_enabled"] = registrationEnabled
 	data["email_verification_enabled"] = emailVerificationEnabled
+	emailDomainPolicy, policyErr := h.SettingService.GetRegistrationEmailDomainPolicy()
+	if policyErr != nil {
+		shared.RespondError(c, response.CodeInternal, "error.config_fetch_failed", policyErr)
+		return
+	}
+	data["email_domain_allowlist_enabled"] = emailDomainPolicy.Enabled
+	data["allowed_email_domains"] = emailDomainPolicy.AllowedDomains
 
 	// 导航配置
 	navConfigVal, _ := h.SettingService.GetByKey(constants.SettingKeyNavConfig)
